@@ -12,13 +12,20 @@
 -->
 
 <header id="top">
-    <button class="addTask">
+    <button
+        class="addTask"
+        on:click={() => {
+            taskList.add({
+                editable: true,
+            });
+        }}
+    >
         <IconPlus width="30" height="30" />
     </button>
 </header>
 <div class="list">
-    {#each $taskList as task (task.id)}
-        <Task {...task} />
+    {#each $taskList as task (task.taskId)}
+        <Task taskId={task.taskId} />
     {/each}
 </div>
 

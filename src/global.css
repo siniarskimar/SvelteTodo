@@ -12,3 +12,7 @@ body {
     grid-template-rows: 50px 1fr;
     background-color: #f8f8f8;
 }
+
+.akicon {
+    stroke-width: 2px;
+}
