@@ -6,6 +6,9 @@ import { terser } from 'rollup-plugin-terser';
 import css from 'rollup-plugin-css-only';
 import copy from 'rollup-plugin-copy';
 import sveltePreprocess from 'svelte-preprocess';
+import alias from '@rollup/plugin-alias';
+import { svelteSVG } from "rollup-plugin-svelte-svg";
+const path = require("path");
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -46,14 +49,14 @@ export default {
             },
             preprocess: sveltePreprocess()
         }),
-        // we'll extract any component CSS out into
-        // a separate file - better for performance
+        alias({
+            entries: [
+                { find: /^\//, replacement: path.resolve(__dirname, "src") + "/" }
+            ]
+        }),
+        svelteSVG(),
         css({ output: 'app.css' }),
 
-        // If you have external dependencies installed from
-        // npm, you'll most likely need these plugins. In
-        // some cases you'll need additional configuration -
-        // consult the documentation for details:
         // https://github.com/rollup/plugins/tree/master/packages/commonjs
         resolve({
             browser: true,
