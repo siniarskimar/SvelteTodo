@@ -3,12 +3,14 @@ import { writable } from 'svelte/store';
 let idCount = 0;
 
 export function createTask(props) {
-    return Object.assign({
+    let obj = {
         taskId: idCount++,
         name: "Unnamed task",
         completed: false,
-        description: ""
-    }, props);
+        editable: false
+    };
+
+    return { ...obj, ...props };
 }
 
 function createTaskListStore() {
@@ -18,13 +20,9 @@ function createTaskListStore() {
         subscribe,
         set,
         update,
-        add: (name) => {
+        add: (props) => {
             update(arr => {
-                arr.push(
-                    createTask({
-                        name: name
-                    })
-                );
+                arr.push(createTask(props));
                 return arr;
             })
         },
